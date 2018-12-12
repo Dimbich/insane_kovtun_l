@@ -112,7 +112,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
 function fullPageSlider() {
   var screen = document.querySelectorAll('.screen'),
-      next = document.querySelectorAll('.next'),
+      next = document.querySelectorAll('a[class^="next"]'),
+      prev = document.querySelectorAll('a[class^="prev"]'),
       toFirst = document.querySelectorAll('.to-first'),
       screenIndex = 1;
 
@@ -123,6 +124,7 @@ function fullPageSlider() {
       return item.style.display = 'none';
     });
     screen[screenIndex - 1].style.display = 'block';
+    if (screen[screenIndex - 1].hasAttribute('id')) location.hash = screen[screenIndex - 1].getAttribute('id');
   };
 
   showScreen(screenIndex);
@@ -145,6 +147,12 @@ function fullPageSlider() {
     item.addEventListener('click', function (e) {
       e.preventDefault();
       nextScreen(1);
+    });
+  });
+  prev.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      nextScreen(-1);
     });
   });
 }
