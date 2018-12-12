@@ -4,12 +4,12 @@ function fullPageSlider() {
       toFirst = document.querySelectorAll('.to-first'),
       screenIndex = 1;
 
-  function showScreen(n) {
+  let showScreen = (n) => {
     if (n > screen.length) screenIndex = 1;
     if (n < 1) screenIndex = screen.length;
     screen.forEach((item) => item.style.display = 'none');
     screen[screenIndex - 1].style.display = 'block';
-  }
+  };
 
   showScreen(screenIndex);
 
@@ -29,7 +29,6 @@ function fullPageSlider() {
       nextScreen(1);
     });
   });
- 
 }
 
 module.exports = fullPageSlider;

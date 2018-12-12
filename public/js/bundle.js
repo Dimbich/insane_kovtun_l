@@ -116,14 +116,14 @@ function fullPageSlider() {
       toFirst = document.querySelectorAll('.to-first'),
       screenIndex = 1;
 
-  function showScreen(n) {
+  var showScreen = function showScreen(n) {
     if (n > screen.length) screenIndex = 1;
     if (n < 1) screenIndex = screen.length;
     screen.forEach(function (item) {
       return item.style.display = 'none';
     });
     screen[screenIndex - 1].style.display = 'block';
-  }
+  };
 
   showScreen(screenIndex);
 
