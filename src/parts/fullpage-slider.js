@@ -13,6 +13,10 @@ function fullPageSlider() {
     if (screen[screenIndex - 1].hasAttribute('id')) location.hash = screen[screenIndex - 1].getAttribute('id');
   };
 
+  if (document.querySelector('.moduleapp') && window.location.hash) {
+    screenIndex = +window.location.hash.slice(1);
+  }
+
   showScreen(screenIndex);
 
   let nextScreen = (n) => showScreen(screenIndex += n);

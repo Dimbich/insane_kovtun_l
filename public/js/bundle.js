@@ -98,11 +98,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
   var fullPageSlider = __webpack_require__(/*! ./parts/fullpage-slider */ "./parts/fullpage-slider.js"),
       videoButton = __webpack_require__(/*! ./parts/video-btn */ "./parts/video-btn.js"),
-      modulesSlider = __webpack_require__(/*! ./parts/modules-slider */ "./parts/modules-slider.js");
+      modulesSlider = __webpack_require__(/*! ./parts/modules-slider */ "./parts/modules-slider.js"),
+      moveToModule = __webpack_require__(/*! ./parts/move-to-module.js */ "./parts/move-to-module.js");
 
   fullPageSlider();
   videoButton();
   modulesSlider();
+  moveToModule();
 });
 
 /***/ }),
@@ -130,6 +132,10 @@ function fullPageSlider() {
     screen[screenIndex - 1].style.display = 'block';
     if (screen[screenIndex - 1].hasAttribute('id')) location.hash = screen[screenIndex - 1].getAttribute('id');
   };
+
+  if (document.querySelector('.moduleapp') && window.location.hash) {
+    screenIndex = +window.location.hash.slice(1);
+  }
 
   showScreen(screenIndex);
 
@@ -219,17 +225,41 @@ function modulesSlider() {
     slideIndex > 1 ? slideIndex-- : slideIndex = 1;
   };
 
-  next.addEventListener('click', function (e) {
-    e.preventDefault();
-    moveNext();
-  });
-  prev.addEventListener('click', function (e) {
-    e.preventDefault();
-    movePrev();
-  });
+  if (prev && next) {
+    next.addEventListener('click', function (e) {
+      e.preventDefault();
+      moveNext();
+    });
+    prev.addEventListener('click', function (e) {
+      e.preventDefault();
+      movePrev();
+    });
+  }
 }
 
 module.exports = modulesSlider;
+
+/***/ }),
+
+/***/ "./parts/move-to-module.js":
+/*!*********************************!*\
+  !*** ./parts/move-to-module.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function moveToModule() {
+  var modules = document.querySelectorAll('.showup__content-slider .card');
+  modules.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = item.getAttribute('href');
+      window.location.href = 'modules.html' + href;
+    });
+  });
+}
+
+module.exports = moveToModule;
 
 /***/ }),
 
