@@ -98,7 +98,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   var fullPageSlider = __webpack_require__(/*! ./parts/fullpage-slider */ "./parts/fullpage-slider.js"),
       videoButton = __webpack_require__(/*! ./parts/video-btn */ "./parts/video-btn.js"),
-      modulesSlider = __webpack_require__(/*! ./parts/modules-slider.js */ "./parts/modules-slider.js");
+      modulesSlider = __webpack_require__(/*! ./parts/modules-slider */ "./parts/modules-slider.js");
 
   fullPageSlider();
   videoButton();
@@ -173,66 +173,59 @@ module.exports = fullPageSlider;
 /***/ (function(module, exports) {
 
 function modulesSlider() {
-  // new Slider({
-  //   slides: '.showup__content-slider .card',
-  //   next: 'showup__content-slider .slick-next',
-  //   prev: 'showup__content-slider .slick-prev',
-  // });
-  var slide = document.querySelectorAll('.showup__content-slider .card'),
+  var slides = document.querySelectorAll('.showup__content-slider .card'),
       prev = document.querySelector('.showup__content-slider .slick-prev'),
       next = document.querySelector('.showup__content-slider .slick-next'),
-      count = 2,
-      slideIndex = [];
+      slideIndex = 1;
 
-  for (i = 1; i < count + 1; i++) {
-    slideIndex.push(i);
-  }
-
-  var showSlides = function showSlides(arr, dirOut, dirIn) {
-    if (arr[1] > slide.length) slideIndex = [1, 2];
-    if (arr[count - 1] < 1) slideIndex = [slide.length - 1, slide.length];
-    slide.forEach(function (item, i) {
-      slide[i].classList.remove('card-active', dirIn);
-      slide[i].classList.add('hidden', dirOut);
-      setTimeout(function () {
-        slide[i].style.display = 'none';
-
-        var _loop = function _loop(_i) {
-          slide[slideIndex[_i] - 1].classList.remove('hidden', dirOut);
-          slide[slideIndex[_i] - 1].style.display = 'block';
-          slide[slideIndex[_i] - 1].classList.add('card-active', dirIn);
-          setTimeout(function () {
-            return slide[slideIndex[_i] - 1].classList.remove(dirIn);
-          }, 700);
-        };
-
-        for (var _i = 0; _i < slideIndex.length; _i++) {
-          _loop(_i);
-        }
-
-        setTimeout(function () {
-          return slide[i].classList.remove(dirOut);
-        }, 700);
-      }, 600);
+  var moveNext = function moveNext() {
+    if (slideIndex == slides.length) return false;
+    slides.forEach(function (item) {
+      return item.classList.remove('card-active');
     });
+
+    var _loop = function _loop(i) {
+      if (i < slideIndex) {
+        slides[i].classList.add('hidden');
+        setTimeout(function () {
+          return slides[i].style.display = 'none';
+        }, 600);
+      }
+
+      if (i == slideIndex) slides[i].classList.add('card-active');
+    };
+
+    for (var i = 0; i < slides.length; i++) {
+      _loop(i);
+    }
+
+    slideIndex < slides.length - 1 ? slideIndex++ : slideIndex = slides.length;
   };
 
-  showSlides(slideIndex, 'fadeOutLeft', 'fadeInRight');
-
-  var nextSlide = function nextSlide(n, dirOut, dirIn) {
-    slideIndex = slideIndex.map(function (i) {
-      return i += n;
+  var movePrev = function movePrev() {
+    if (slideIndex - 1 < 1) return false;
+    slides.forEach(function (item) {
+      return item.classList.remove('card-active');
     });
-    showSlides(slideIndex, dirOut, dirIn);
+
+    for (var i = slides.length; i >= 0; i--) {
+      if (i == slideIndex - 2) {
+        slides[i].style.display = 'inline-block';
+        slides[i].classList.remove('hidden');
+        slides[i].classList.add('card-active');
+      }
+    }
+
+    slideIndex > 1 ? slideIndex-- : slideIndex = 1;
   };
 
   next.addEventListener('click', function (e) {
     e.preventDefault();
-    nextSlide(count, 'fadeOutLeft', 'fadeInRight');
+    moveNext();
   });
   prev.addEventListener('click', function (e) {
     e.preventDefault();
-    nextSlide(-count, 'fadeOutRight', 'fadeInLeft');
+    movePrev();
   });
 }
 
