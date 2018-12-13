@@ -1,6 +1,7 @@
 function fullPageSlider() {
   let screen = document.querySelectorAll('.screen'),
-      next = document.querySelectorAll('.next'),
+      next = document.querySelectorAll('a[class^="next"]'),
+      prev = document.querySelectorAll('a[class^="prev"]'),
       toFirst = document.querySelectorAll('.to-first'),
       screenIndex = 1;
 
@@ -9,6 +10,7 @@ function fullPageSlider() {
     if (n < 1) screenIndex = screen.length;
     screen.forEach((item) => item.style.display = 'none');
     screen[screenIndex - 1].style.display = 'block';
+    if (screen[screenIndex - 1].hasAttribute('id')) location.hash = screen[screenIndex - 1].getAttribute('id');
   };
 
   showScreen(screenIndex);
@@ -27,6 +29,13 @@ function fullPageSlider() {
     item.addEventListener('click', (e) => {
       e.preventDefault();
       nextScreen(1);
+    });
+  });
+
+  prev.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      nextScreen(-1);
     });
   });
 }
