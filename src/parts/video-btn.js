@@ -27,7 +27,7 @@ function videoButton() {
     delay(0)
       .then(() => {
         videoWrap.classList.add('hide');
-        return delay(1000);
+        return delay(0);
       })
       .then(() => {
         overlay.classList.add('hide');

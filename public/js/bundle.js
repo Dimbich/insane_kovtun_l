@@ -99,13 +99,60 @@ window.addEventListener('DOMContentLoaded', function () {
   var fullPageSlider = __webpack_require__(/*! ./parts/fullpage-slider */ "./parts/fullpage-slider.js"),
       videoButton = __webpack_require__(/*! ./parts/video-btn */ "./parts/video-btn.js"),
       modulesSlider = __webpack_require__(/*! ./parts/modules-slider */ "./parts/modules-slider.js"),
-      moveToModule = __webpack_require__(/*! ./parts/move-to-module.js */ "./parts/move-to-module.js");
+      moveToModule = __webpack_require__(/*! ./parts/move-to-module */ "./parts/move-to-module.js"),
+      showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js");
 
   fullPageSlider();
   videoButton();
   modulesSlider();
   moveToModule();
+  showDifference();
 });
+
+/***/ }),
+
+/***/ "./parts/difference.js":
+/*!*****************************!*\
+  !*** ./parts/difference.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function showDifference() {
+  var differenceCard = document.querySelectorAll('.difference__info-cards .officer');
+  differenceCard.forEach(function (item) {
+    var plusWrap = item.querySelector('.officer__card-item--show'),
+        plus = plusWrap.querySelector('.plus'),
+        step = item.querySelectorAll('.officer__card-item'),
+        stepIndex = 0;
+    step.forEach(function (item) {
+      return item.style.display = 'none';
+    });
+    plusWrap.style.display = 'flex';
+    plus.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      for (var i = 0; i < step.length; i++) {
+        if (i == stepIndex) {
+          step[i].style.display = 'flex';
+          step[i].style.height = '83px';
+          step[i].classList.add('show');
+        }
+      }
+
+      stepIndex++;
+
+      if (stepIndex + 1 == step.length) {
+        plusWrap.classList.add('fadeOut');
+        setTimeout(function () {
+          return plusWrap.style.display = 'none';
+        }, 600);
+      }
+    });
+  });
+}
+
+module.exports = showDifference;
 
 /***/ }),
 
@@ -296,7 +343,7 @@ function videoButton() {
 
     delay(0).then(function () {
       videoWrap.classList.add('hide');
-      return delay(1000);
+      return delay(0);
     }).then(function () {
       overlay.classList.add('hide');
       return delay(800);
