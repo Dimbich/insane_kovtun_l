@@ -17,35 +17,28 @@
 
 .showup__content {
   overflow: hidden;
-  white-space: nowrap; 
-  transition: all 0.5s;
-}
-.showup__content-slider {
-  /*overflow: hidden;*/
 }
 
-.showup__content-slider .card {
-  display: inline-block;
-  transition: all 0.5s;
-  animation-duration: 0.6s;
-  animation-name: fadeInLeftMod;
+.sliderContainer .slideItem {
+  animation-duration: 0.5s;
+  transition: left 0.5s;
 }
 
-.showup__content-slider .card.hidden {
-  padding-right: 0;
-  padding-left: 0;
-  margin-right: 0;
-  width: 0;
-  opacity: 0;
-  -webkit-transform: translate3d(-331px, 0, 0);
-  transform: translate3d(-331px, 0, 0);
-}
-
-.showup__content-slider .card.card-active .card__controls,
-.showup__content-slider .card.card-active .card__controls .card__controls-arrow,
-.showup__content-slider .card.card-active .card__title {
+.showup__content-slider .card.active .card__controls,
+.showup__content-slider .card.active .card__controls .card__controls-arrow,
+.showup__content-slider .card.active .card__title {
   opacity: 1;
 }
+
+.modules__content-slider .card.active {
+  padding-top: 213px;
+}
+.modules__content-slider .card.active .card__controls .card__controls-arrow,
+.modules__content-slider .card.active .card__title,
+.modules__content-slider .card.active .card__description {
+  opacity: 1;
+}
+
 
 .difference__info-cards .officer__card-item:not(.officer__card-item--show) {
   height: 0;
@@ -58,6 +51,8 @@
 .difference__info-cards .officer__card-item--show {
   animation-duration: 0.6s;
 }
+
+
 
 @-webkit-keyframes fadeInLeftMod {
   from {

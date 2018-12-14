@@ -3,13 +3,15 @@ window.addEventListener('DOMContentLoaded', function(){
 
   let fullPageSlider = require('./parts/fullpage-slider'),
       videoButton = require('./parts/video-btn'),
-      modulesSlider = require('./parts/modules-slider'),
+      // modulesSlider = require('./parts/modules-slider'),
       moveToModule = require('./parts/move-to-module'),
-      showDifference = require('./parts/difference');
+      showDifference = require('./parts/difference'),
+      autoplaySlider = require('./parts/slider');
 
   fullPageSlider();
   videoButton();
-  modulesSlider();
+  // modulesSlider();
   moveToModule();
   showDifference();
+  autoplaySlider();
 });
