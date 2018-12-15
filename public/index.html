@@ -71,11 +71,11 @@
           </div>
         </div>
       </div>
-      <div class="showup__content fade">
+      <div class="showup__content fade sliderWrap">
         <div class="showup__content-title">Explore Educational<br>
           Modules To Evolve <br>
           Your Career</div>
-        <div class="showup__content-slider">
+        <div class="showup__content-slider sliderContainer" data-count=3>
           <button type="button" class="slick-prev">
             <div class="play__content">
               <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@
               </svg>
             </div>
           </button>
-          <a href="#" class="card card__1 card-active">
+          <a href="modules.html#1" data-mr=24 class="card card__1 slideItem active">
             <div class="card__controls">
               <div class="card__controls-count">01</div>
               <div class="card__controls-arrow">
@@ -101,7 +101,7 @@
             </div>
             <div class="card__title">Building Your<br> Digital Brand</div>
           </a>
-          <a href="#" class="card card__2">
+          <a href="modules.html#2" data-mr=24 class="card card__2 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">02</div>
               <div class="card__controls-arrow">
@@ -112,7 +112,7 @@
             </div>
             <div class="card__title">Realtor<br> Partners</div>
           </a>
-          <a href="#" class="card card__3">
+          <a href="modules.html#3" data-mr=24 class="card card__3 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">03</div>
               <div class="card__controls-arrow">
@@ -123,7 +123,7 @@
             </div>
             <div class="card__title">Local<br> Marketing</div>
           </a>
-          <a href="#" class="card card__1">
+          <a href="modules.html#4" data-mr=24 class="card card__1 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">04</div>
               <div class="card__controls-arrow">
@@ -134,7 +134,7 @@
             </div>
             <div class="card__title">Digital<br> Marketing</div>
           </a>
-          <a href="#" class="card card__2">
+          <a href="modules.html#5" data-mr=24 class="card card__2 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">05</div>
               <div class="card__controls-arrow">
@@ -145,7 +145,7 @@
             </div>
             <div class="card__title">Lead<br> Management</div>
           </a>
-          <a href="#" class="card card__2">
+          <a href="modules.html#6" data-mr=24 class="card card__2 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">06</div>
               <div class="card__controls-arrow">
@@ -156,7 +156,7 @@
             </div>
             <div class="card__title">Quoting</div>
           </a>
-          <a href="#" class="card card__2">
+          <a href="modules.html#7" data-mr=24 class="card card__2 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">07</div>
               <div class="card__controls-arrow">
@@ -167,7 +167,7 @@
             </div>
             <div class="card__title">Customer<br> Loan Experience</div>
           </a>
-          <a href="#" class="card card__2">
+          <a href="modules.html#8" data-mr=24 class="card card__2 slideItem">
             <div class="card__controls">
               <div class="card__controls-count">08</div>
               <div class="card__controls-arrow">
@@ -182,14 +182,14 @@
         <div class="showup__content-side">
           <div class="showup__content-explore">
             <div class="module">Explore all modules</div>
-            <div class="plus">
+            <a href="modules.html" class="plus">
               <div class="plus__content">
                 <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5.16699 1.00033C5.16699 0.540088 5.54009 0.166992 6.00033 0.166992C6.46056 0.166992 6.83366 0.540088 6.83366 1.00033V11.0003C6.83366 11.4606 6.46056 11.8337 6.00033 11.8337C5.54009 11.8337 5.16699 11.4606 5.16699 11.0003V1.00033Z" fill="white" />
                   <path d="M1.00033 6.83366C0.540088 6.83366 0.166992 6.46056 0.166992 6.00033C0.166992 5.54009 0.540088 5.16699 1.00033 5.16699H11.0003C11.4606 5.16699 11.8337 5.54009 11.8337 6.00033C11.8337 6.46056 11.4606 6.83366 11.0003 6.83366H1.00033Z" fill="white" />
                 </svg>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -238,7 +238,7 @@
           <div class="title">The difference</span></div>
           <div class="subtitle">Between education 10 years ago and today</div>
           <div class="difference__info-cards fade">
-            <div class="officerold">
+            <div class="officer officerold">
               <div class="officer__card-title">
                 Education<br>
                 <span>10 years ago</span>
@@ -264,13 +264,65 @@
                   and explanation
                 </div>
               </div>
+              <div class="officer__card-item officer__card-item--show">
+                <div class="card__counter">
+                  <svg width="18" height="26" viewBox="0 0 18 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.34" filter="url(#filter0_d)">
+                      <path d="M4.824 11.6716V7.37561H6.048C8.12 7.37561 9.156 6.85161 9.156 5.80361C9.156 4.79561 8.128 4.28361 6.072 4.26761C5.44 4.26761 4.86 4.29961 4.332 4.36361L4.116 0.619608C4.9 0.515608 5.764 0.463608 6.708 0.463608C8.772 0.463608 10.384 0.907609 11.544 1.79561C12.712 2.68361 13.296 3.89161 13.296 5.41961C13.296 6.75561 12.88 7.85161 12.048 8.70761C11.216 9.55561 10.008 10.1316 8.424 10.4356L8.34 11.6716H4.824ZM6.576 12.9436C7.232 12.9436 7.804 13.1876 8.292 13.6756C8.788 14.1636 9.036 14.7396 9.036 15.4036C9.036 16.0756 8.788 16.6636 8.292 17.1676C7.804 17.6636 7.232 17.9116 6.576 17.9116C5.904 17.9116 5.32 17.6676 4.824 17.1796C4.336 16.6836 4.092 16.0956 4.092 15.4156C4.092 14.7516 4.336 14.1756 4.824 13.6876C5.32 13.1916 5.904 12.9436 6.576 12.9436Z" fill="#BEBEBE" />
+                    </g>
+                    <defs>
+                      <filter id="filter0_d" x="0.0917969" y="0.463867" width="17.204" height="25.448" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+                        <feOffset dy="4" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="card__click">
+                  <div>Click to show </div>
+                  <div class="plus">
+                    <div class="plus__content">
+                      <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.16699 1.00033C5.16699 0.540088 5.54009 0.166992 6.00033 0.166992C6.46056 0.166992 6.83366 0.540088 6.83366 1.00033V11.0003C6.83366 11.4606 6.46056 11.8337 6.00033 11.8337C5.54009 11.8337 5.16699 11.4606 5.16699 11.0003V1.00033Z" fill="white" />
+                        <path d="M1.00033 6.83366C0.540088 6.83366 0.166992 6.46056 0.166992 6.00033C0.166992 5.54009 0.540088 5.16699 1.00033 5.16699H11.0003C11.4606 5.16699 11.8337 5.54009 11.8337 6.00033C11.8337 6.46056 11.4606 6.83366 11.0003 6.83366H1.00033Z" fill="white" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="officernew">
+            <div class="officer officernew">
               <div class="officer__card-title">
                 Education<br>
                 <span>today</span>
               </div>
               <div class="officer__card-item">
+                <div class="card__counter">01</div>
+                <div class="card__descr">
+                  First step with some text
+                  and explanation
+                </div>
+              </div>
+              <div class="officer__card-item">
+                <div class="card__counter">02</div>
+                <div class="card__descr">
+                  Second step with some text
+                  and explanation
+                </div>
+              </div>
+              <div class="officer__card-item">
+                <div class="card__counter">03</div>
+                <div class="card__descr">
+                  Third step with some text
+                  and explanation
+                </div>
+              </div>
+              <div class="officer__card-item officer__card-item--show">
                 <div class="card__counter">
                   <svg width="18" height="26" viewBox="0 0 18 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g opacity="0.34" filter="url(#filter0_d)">
@@ -346,7 +398,7 @@
         </div>
       </div>
 
-      <div class="modules__wrapper">
+      <div class="modules__wrapper sliderWrap" >
         <div class="modules__info fade">
           <div class="evolve opaci">bring<span>it:</span>up</div>
           <div class="title">Explore<br>
@@ -379,9 +431,9 @@
             </div>
           </div>
         </div>
-        <div class="modules__slider ">
-          <div class="modules__content-slider fade">
-            <a href="#" class="card card__1 card-active">
+        <div class="modules__slider">
+          <div class="modules__content-slider sliderContainer" data-count=3 data-loop>
+            <a href="modules.html#1" data-mr=24 class="card card__1 slideItem active">
               <div class="card__controls">
                 <div class="card__controls-count">Module #1</div>
                 <div class="card__controls-arrow">
@@ -402,7 +454,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__2">
+            <a href="modules.html#2" data-mr=24 class="card card__2 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #2</div>
                 <div class="card__controls-arrow">
@@ -423,7 +475,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__3">
+            <a href="modules.html#3" data-mr=24 class="card card__3 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #3</div>
                 <div class="card__controls-arrow">
@@ -444,7 +496,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__4">
+            <a href="modules.html#4" data-mr=24 class="card card__1 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #4</div>
                 <div class="card__controls-arrow">
@@ -465,7 +517,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__5">
+            <a href="modules.html#5" data-mr=24 class="card card__2 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #5</div>
                 <div class="card__controls-arrow">
@@ -486,7 +538,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__6">
+            <a href="modules.html#6" data-mr=24 class="card card__2 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #6</div>
                 <div class="card__controls-arrow">
@@ -507,7 +559,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__7">
+            <a href="modules.html#7" data-mr=24 class="card card__2 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #7</div>
                 <div class="card__controls-arrow">
@@ -528,7 +580,7 @@
                 </div>
               </div>
             </a>
-            <a href="#" class="card card__8">
+            <a href="modules.html#8" data-mr=24 class="card card__2 slideItem">
               <div class="card__controls">
                 <div class="card__controls-count">Module #8</div>
                 <div class="card__controls-arrow">
@@ -673,7 +725,7 @@
       </div>
     </div>
 
-    <div class="screen feed">
+    <div class="screen feed sliderWrap">
       <div class="menu">
         <div class="evolve hidden">bring<span>it:</span>up</div>
         <div class="menu__block">
@@ -717,8 +769,22 @@
       </div>
       <div class="colored fade"></div>
 
-      <div class="feed__slider">
-        <div class="feed__item feed__item-active">
+      <div class="feed__slider sliderContainer" data-count=5 data-activeWidth=555>
+        <button type="button" class="slick-prev">
+          <div class="play__content">
+            <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="1" d="M0 5.5L9 11V0L0 5.5Z" fill="#EAEAEA" />
+            </svg>
+          </div>
+        </button>
+        <button type="button" class="slick-next">
+          <div class="play__content">
+            <svg width="9" height="11" viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="1" d="M9 5.5L0 11V0L9 5.5Z" fill="#EAEAEA" />
+            </svg>
+          </div>
+        </button>
+        <div data-mr=32 class="feed__item slideItem active">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_1.png" alt="Andrew">
@@ -747,7 +813,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </div>
         </div>
-        <div class="feed__item ">
+        <div data-mr=32 class="feed__item slideItem ">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_2.png" alt="Cynthia Weber">
@@ -776,7 +842,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </div>
         </div>
-        <div class="feed__item ">
+        <div data-mr=32 class="feed__item slideItem ">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_3.png" alt="Owen Thornton">
@@ -805,7 +871,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </div>
         </div>
-        <div class="feed__item ">
+        <div data-mr=32 class="feed__item slideItem ">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_1.png" alt="Marion Murphy">
@@ -834,7 +900,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </div>
         </div>
-        <div class="feed__item ">
+        <div data-mr=32 class="feed__item slideItem ">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_2.png" alt="Marion Murphy">
@@ -863,7 +929,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </div>
         </div>
-        <div class="feed__item ">
+        <div data-mr=32 class="feed__item slideItem ">
           <div class="feed__item-info">
             <div class="photo">
               <img src="img/feed_3.png" alt="Marion Murphy">

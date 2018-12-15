@@ -21,7 +21,6 @@ function modulesSlider() {
     (slideIndex < slides.length - 1) ? slideIndex++ : slideIndex = slides.length;
   };
 
-
   let movePrev = () => {
     if (slideIndex - 1 < 1) return false;
     slides.forEach((item) => item.classList.remove('card-active'));
@@ -37,15 +36,17 @@ function modulesSlider() {
     (slideIndex > 1) ? slideIndex-- : slideIndex = 1;
   };
 
-  next.addEventListener('click', (e) => {
-    e.preventDefault();
-    moveNext();
-  });
+  if (prev && next) {
+    next.addEventListener('click', (e) => {
+      e.preventDefault();
+      moveNext();
+    });
 
-  prev.addEventListener('click', (e) => {
-    e.preventDefault();
-    movePrev();
-  });
+    prev.addEventListener('click', (e) => {
+      e.preventDefault();
+      movePrev();
+    });
+  }
 }
 
 module.exports = modulesSlider;
