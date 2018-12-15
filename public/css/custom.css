@@ -23,6 +23,9 @@
   animation-duration: 0.5s;
   transition: left 0.5s;
 }
+.modules__info .hanson {
+  animation: slideInUp 0.5s both 3s;
+}
 
 .showup__content-slider .card.active .card__controls,
 .showup__content-slider .card.active .card__controls .card__controls-arrow,
