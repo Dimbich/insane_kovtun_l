@@ -168,20 +168,35 @@ module.exports = showDifference;
 /***/ (function(module, exports) {
 
 function form() {
-  console.log('form');
   var form = document.querySelectorAll('form.form');
   form.forEach(function (item) {
     var message = {
-      loading: 'Загрузка...',
-      succsess: 'Спасибо! Скоро мы с вами свяжемся!',
-      failure: 'Что-то пошло не так...'
+      loading: 'Loading...',
+      succsess: 'Thank you! We will contact you soon!',
+      failure: 'Something goes wrong...'
     };
     var input = item.querySelectorAll('input'),
         statusMessage = document.createElement('div');
     statusMessage.classList.add('status');
+    input.forEach(function (item) {
+      var name = item.getAttribute('name');
+
+      if (name == 'phone') {
+        mask(item);
+      }
+
+      if (name == 'email') {
+        validate(item, /^[a-zA-Z0-9 ,.\-:"()]*?$/);
+      }
+
+      if (name == 'datetime') {
+        validate(item, /^[0-9 .\/]*?$/);
+      }
+    });
     item.addEventListener('submit', function (e) {
       e.preventDefault();
       this.appendChild(statusMessage);
+      statusMessage.classList.remove('hidden');
       var formData = new FormData(this),
           obj = {};
       formData.forEach(function (value, key) {
@@ -219,20 +234,77 @@ function form() {
 
       var clearMessage = function clearMessage() {
         setTimeout(function () {
-          statusMessage.innerHTML = '';
+          return statusMessage.classList.add('hidden');
         }, 3000);
+        setTimeout(function () {
+          return statusMessage.parentNode.removeChild(statusMessage);
+        }, 4000);
       }; //clearMessage end
 
 
       postData(json).then(function () {
-        return statusMessage.innerHTML = message.loading;
+        statusMessage.style.backgroundColor = '#BEAB2A';
+        statusMessage.innerHTML = message.loading;
       }).then(function () {
-        return statusMessage.innerHTML = message.succsess;
+        statusMessage.style.backgroundColor = '#166D29';
+        statusMessage.innerHTML = message.succsess;
       }).catch(function () {
-        return statusMessage.innerHTML = message.failure;
+        statusMessage.style.backgroundColor = 'red';
+        statusMessage.innerHTML = message.failure;
       }).then(clearInput).then(clearMessage);
     }); // submin end
-  });
+  }); // validate
+
+  function validate(input, regex) {
+    var value = input.value;
+    input.addEventListener('input', function (e) {
+      var newValue = e.target.value;
+
+      if (!newValue.match(regex)) {
+        input.value = value;
+        return;
+      }
+
+      value = newValue;
+    });
+  } // end validate
+  // mask
+
+
+  function mask(input) {
+    function setCursorPosition(pos, elem) {
+      elem.focus();
+      if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);else if (elem.createTextRange) {
+        var range = elem.createTextRange();
+        range.collapse(true);
+        range.moveEnd("character", pos);
+        range.moveStart("character", pos);
+        range.select();
+      }
+    } // end setCursorPosition
+
+
+    function change(event) {
+      var matrix = "+1 (___) ___-____",
+          i = 0,
+          def = matrix.replace(/\D/g, ""),
+          val = this.value.replace(/\D/g, "");
+      if (def.length >= val.length) val = def;
+      this.value = matrix.replace(/./g, function (a) {
+        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+      });
+
+      if (event.type == "blur") {
+        if (this.value.length == 2) this.value = "";
+      } else setCursorPosition(this.value.length, this);
+    } // end Change
+
+
+    input.addEventListener("input", change, false);
+    input.addEventListener("focus", change, false);
+    input.addEventListener("blur", change, false);
+  } // end mask
+
 }
 
 module.exports = form;
