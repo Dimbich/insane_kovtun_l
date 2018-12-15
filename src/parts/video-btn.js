@@ -8,12 +8,15 @@ function videoButton() {
   play.forEach((item) => {
     let videoUrl = item.dataset.url;
     
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      video.src = videoUrl;
-      overlay.style.display = 'flex';
-      videoWrap.style.display = 'block';
-    });
+    
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!item.querySelector('.closed') || !item.querySelector('.attention')) {
+          video.src = videoUrl;
+          overlay.style.display = 'flex';
+          videoWrap.style.display = 'block';
+        }
+      });
   });
 
 

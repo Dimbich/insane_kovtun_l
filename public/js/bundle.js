@@ -102,7 +102,8 @@ window.addEventListener('DOMContentLoaded', function () {
   // moveToModule = require('./parts/move-to-module'),
   showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
       autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
-      form = __webpack_require__(/*! ./parts/form */ "./parts/form.js");
+      form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
+      modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js");
 
   fullPageSlider();
   videoButton(); // modulesSlider();
@@ -111,6 +112,7 @@ window.addEventListener('DOMContentLoaded', function () {
   showDifference();
   autoplaySlider();
   form();
+  modulesVideo();
 });
 
 /***/ }),
@@ -373,6 +375,45 @@ module.exports = fullPageSlider;
 
 /***/ }),
 
+/***/ "./parts/modules-video.js":
+/*!********************************!*\
+  !*** ./parts/modules-video.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function modulesVideo() {
+  var videoArr = document.querySelectorAll('.module__video');
+  videoArr.forEach(function (item) {
+    var video = item.querySelectorAll('.module__video-item'),
+        active = video[0],
+        activeBtn = active.querySelector('.play').innerHTML;
+    var a = 0;
+
+    var _loop = function _loop(i) {
+      if (a == i) {
+        video[i].querySelector('.play').addEventListener('click', function () {
+          if (video[i + 1] !== undefined) {
+            video[i + 1].classList.add('active');
+            setTimeout(function () {
+              return video[i + 1].querySelector('.play').innerHTML = activeBtn;
+            }, 1000);
+          }
+        });
+        a++;
+      }
+    };
+
+    for (var i = 0; i < video.length; i++) {
+      _loop(i);
+    }
+  });
+}
+
+module.exports = modulesVideo;
+
+/***/ }),
+
 /***/ "./parts/slider.js":
 /*!*************************!*\
   !*** ./parts/slider.js ***!
@@ -514,9 +555,12 @@ function videoButton() {
     var videoUrl = item.dataset.url;
     item.addEventListener('click', function (e) {
       e.preventDefault();
-      video.src = videoUrl;
-      overlay.style.display = 'flex';
-      videoWrap.style.display = 'block';
+
+      if (!item.querySelector('.closed') || !item.querySelector('.attention')) {
+        video.src = videoUrl;
+        overlay.style.display = 'flex';
+        videoWrap.style.display = 'block';
+      }
     });
   });
   close.addEventListener('click', function (e) {
