@@ -101,7 +101,8 @@ window.addEventListener('DOMContentLoaded', function () {
       // modulesSlider = require('./parts/modules-slider'),
   // moveToModule = require('./parts/move-to-module'),
   showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
-      autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js");
+      autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
+      form = __webpack_require__(/*! ./parts/form */ "./parts/form.js");
 
   fullPageSlider();
   videoButton(); // modulesSlider();
@@ -109,6 +110,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   showDifference();
   autoplaySlider();
+  form();
 });
 
 /***/ }),
@@ -155,6 +157,85 @@ function showDifference() {
 }
 
 module.exports = showDifference;
+
+/***/ }),
+
+/***/ "./parts/form.js":
+/*!***********************!*\
+  !*** ./parts/form.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function form() {
+  console.log('form');
+  var form = document.querySelectorAll('form.form');
+  form.forEach(function (item) {
+    var message = {
+      loading: 'Загрузка...',
+      succsess: 'Спасибо! Скоро мы с вами свяжемся!',
+      failure: 'Что-то пошло не так...'
+    };
+    var input = item.querySelectorAll('input'),
+        statusMessage = document.createElement('div');
+    statusMessage.classList.add('status');
+    item.addEventListener('submit', function (e) {
+      e.preventDefault();
+      this.appendChild(statusMessage);
+      var formData = new FormData(this),
+          obj = {};
+      formData.forEach(function (value, key) {
+        obj[key] = value;
+      });
+      var json = JSON.stringify(obj);
+
+      function postData(data) {
+        return new Promise(function (resolve, reject) {
+          var request = new XMLHttpRequest();
+          request.open('POST', 'server.php');
+          request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+          request.onreadystatechange = function () {
+            if (request.readyState < 4) {
+              resolve();
+            } else if (request.readyState === 4 && request.status == 200) {
+              resolve();
+            } else {
+              reject();
+            }
+          };
+
+          request.send(data);
+        }); // Promise end
+      } // postData end
+
+
+      var clearInput = function clearInput() {
+        for (var i = 0; i < input.length; i++) {
+          input[i].value = '';
+        }
+      }; // clearInput end
+
+
+      var clearMessage = function clearMessage() {
+        setTimeout(function () {
+          statusMessage.innerHTML = '';
+        }, 3000);
+      }; //clearMessage end
+
+
+      postData(json).then(function () {
+        return statusMessage.innerHTML = message.loading;
+      }).then(function () {
+        return statusMessage.innerHTML = message.succsess;
+      }).catch(function () {
+        return statusMessage.innerHTML = message.failure;
+      }).then(clearInput).then(clearMessage);
+    }); // submin end
+  });
+}
+
+module.exports = form;
 
 /***/ }),
 
@@ -247,16 +328,16 @@ function autoplaySlider() {
       item.style.position = 'absolute';
     });
 
-    function toggleClass(object, animation) {
+    var toggleClass = function toggleClass(object, animation) {
       var display = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       object.classList.add(animation);
       setTimeout(function () {
         if (display !== null) object.style.display = display;
         object.classList.remove(animation);
       }, 400);
-    }
+    };
 
-    function showSlides(n) {
+    var showSlides = function showSlides(n) {
       // clear card-active
       slides.forEach(function (item) {
         return item.classList.remove('active');
@@ -285,21 +366,13 @@ function autoplaySlider() {
         slides[n[_i]].style.left = left + 'px';
         left += Math.floor(width + marginRight);
       }
-    } // end showSlides
+    }; // end showSlides
     // showAll
 
 
-    showSlides(slideIndex); // infinite
+    showSlides(slideIndex); // next-prev
 
-    if (sliderContainer.hasAttribute('data-loop')) {
-      var timerId = setTimeout(function run() {
-        nextSlide(1);
-        setTimeout(run, 4000);
-      }, 4000);
-    } // next-prev
-
-
-    function nextSlide(n) {
+    var nextSlide = function nextSlide(n) {
       slideIndex = slideIndex.map(function (item) {
         return item + n;
       }); // loop
@@ -327,7 +400,7 @@ function autoplaySlider() {
       }
 
       showSlides(slideIndex);
-    } // end nextSlide
+    }; // end nextSlide
 
 
     next.addEventListener('click', function (e) {
@@ -337,7 +410,14 @@ function autoplaySlider() {
     prev.addEventListener('click', function (e) {
       e.preventDefault();
       nextSlide(-1);
-    });
+    }); // infinite
+
+    if (sliderContainer.hasAttribute('data-loop')) {
+      var timerId = setTimeout(function run() {
+        nextSlide(1);
+        setTimeout(run, 4000);
+      }, 4000);
+    }
   });
 }
 

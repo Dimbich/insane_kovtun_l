@@ -6,7 +6,8 @@ window.addEventListener('DOMContentLoaded', function(){
       // modulesSlider = require('./parts/modules-slider'),
       // moveToModule = require('./parts/move-to-module'),
       showDifference = require('./parts/difference'),
-      autoplaySlider = require('./parts/slider');
+      autoplaySlider = require('./parts/slider'),
+      form = require('./parts/form');
 
   fullPageSlider();
   videoButton();
@@ -14,4 +15,5 @@ window.addEventListener('DOMContentLoaded', function(){
   // moveToModule();
   showDifference();
   autoplaySlider();
+  form();
 });
