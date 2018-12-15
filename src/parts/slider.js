@@ -92,7 +92,7 @@ function autoplaySlider() {
       if (n < 0) {
         toggleClass(slides[slideIndex[0]], 'fadeInLeft', 'block');
       } else {
-        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn');
+        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn', 'block');
       }
 
       showSlides(slideIndex);
