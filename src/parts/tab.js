@@ -11,7 +11,6 @@ function tab() {
         next.style.height = '0';
         next.classList.remove('open');
       } else {
-        console.log('open');
         next.style.height = next.scrollHeight + 'px';
         next.classList.add('open');
       }

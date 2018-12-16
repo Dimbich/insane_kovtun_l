@@ -9,7 +9,8 @@ window.addEventListener('DOMContentLoaded', function(){
       autoplaySlider = require('./parts/slider'),
       form = require('./parts/form'),
       modulesVideo = require('./parts/modules-video'),
-      tab = require('./parts/tab');
+      tab = require('./parts/tab'),
+      downloadBtn = require('./parts/download');
 
   fullPageSlider();
   videoButton();
@@ -20,4 +21,5 @@ window.addEventListener('DOMContentLoaded', function(){
   form();
   modulesVideo();
   tab();
+  downloadBtn();
 });

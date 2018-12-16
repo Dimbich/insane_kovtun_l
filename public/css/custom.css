@@ -86,6 +86,10 @@
   overflow: hidden;
 }
 
+.download {
+  cursor: pointer;
+}
+
 @-webkit-keyframes fadeInDownMod {
   from {
     height: 0;

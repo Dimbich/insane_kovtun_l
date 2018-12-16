@@ -104,7 +104,8 @@ window.addEventListener('DOMContentLoaded', function () {
       autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
       form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
       modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js"),
-      tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js");
+      tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js"),
+      downloadBtn = __webpack_require__(/*! ./parts/download */ "./parts/download.js");
 
   fullPageSlider();
   videoButton(); // modulesSlider();
@@ -115,6 +116,7 @@ window.addEventListener('DOMContentLoaded', function () {
   form();
   modulesVideo();
   tab();
+  downloadBtn();
 });
 
 /***/ }),
@@ -161,6 +163,30 @@ function showDifference() {
 }
 
 module.exports = showDifference;
+
+/***/ }),
+
+/***/ "./parts/download.js":
+/*!***************************!*\
+  !*** ./parts/download.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function downloadBtn() {
+  var downloadBtn = document.querySelectorAll('.download');
+  downloadBtn.forEach(function (item) {
+    var link = document.createElement('a');
+    link.setAttribute('href', 'assets/WP-2014-2-Five-Steps-to-Planning-Success.pdf');
+    link.setAttribute('download', 'fileName');
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      link.click();
+    });
+  });
+}
+
+module.exports = downloadBtn;
 
 /***/ }),
 
@@ -558,7 +584,6 @@ function tab() {
         next.style.height = '0';
         next.classList.remove('open');
       } else {
-        console.log('open');
         next.style.height = next.scrollHeight + 'px';
         next.classList.add('open');
       }
