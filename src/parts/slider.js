@@ -2,7 +2,7 @@ function autoplaySlider() {
 
   let slideWrap = document.querySelectorAll('.sliderWrap');
 
-  slideWrap.forEach(function(item) {
+  slideWrap.forEach((item) => {
     let sliderContainer = item.querySelector('.sliderContainer'),
         slides = item.querySelectorAll('.slideItem'),
         prev = item.querySelector('.slick-prev'),
@@ -20,16 +20,16 @@ function autoplaySlider() {
       item.style.position = 'absolute';
     });
 
-    function toggleClass(object, animation, display = null) {
+    let toggleClass = (object, animation, display = null) => {
       object.classList.add(animation);
       setTimeout(() => {
         if (display !== null) object.style.display = display;
         object.classList.remove(animation);
       }, 400);
-    }
+    };
     
 
-    function showSlides(n) {
+    let showSlides = (n) => {
       // clear card-active
       slides.forEach((item) => item.classList.remove('active'));
      
@@ -57,21 +57,13 @@ function autoplaySlider() {
         slides[n[i]].style.left = left + 'px';
         left += Math.floor(width + marginRight);
       }  
-    } // end showSlides
+    }; // end showSlides
 
     // showAll
     showSlides(slideIndex);
 
-    // infinite
-    if (sliderContainer.hasAttribute('data-loop')) {
-      let timerId = setTimeout(function run() {
-        nextSlide(1);
-        setTimeout(run, 4000);
-      }, 4000);
-    }
-
     // next-prev
-    function nextSlide(n) {
+    let nextSlide = (n) => {
       slideIndex = slideIndex.map((item) => item + n);
 
       // loop
@@ -92,21 +84,29 @@ function autoplaySlider() {
       if (n < 0) {
         toggleClass(slides[slideIndex[0]], 'fadeInLeft', 'block');
       } else {
-        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn');
+        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn', 'block');
       }
 
       showSlides(slideIndex);
-    } // end nextSlide
+    }; // end nextSlide
 
-    next.addEventListener('click', function (e) {
+    next.addEventListener('click', (e) => {
       e.preventDefault();
       nextSlide(1);
     });
 
-    prev.addEventListener('click', function (e) {
+    prev.addEventListener('click', (e) => {
       e.preventDefault();
       nextSlide(-1);
     });
+
+    // infinite
+    if (sliderContainer.hasAttribute('data-loop')) {
+      let timerId = setTimeout(function run() {
+        nextSlide(1);
+        setTimeout(run, 4000);
+      }, 4000);
+    }
   });
 }
 

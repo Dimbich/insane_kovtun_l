@@ -101,7 +101,11 @@ window.addEventListener('DOMContentLoaded', function () {
       // modulesSlider = require('./parts/modules-slider'),
   // moveToModule = require('./parts/move-to-module'),
   showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
-      autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js");
+      autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
+      form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
+      modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js"),
+      tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js"),
+      downloadBtn = __webpack_require__(/*! ./parts/download */ "./parts/download.js");
 
   fullPageSlider();
   videoButton(); // modulesSlider();
@@ -109,6 +113,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
   showDifference();
   autoplaySlider();
+  form();
+  modulesVideo();
+  tab();
+  downloadBtn();
 });
 
 /***/ }),
@@ -155,6 +163,181 @@ function showDifference() {
 }
 
 module.exports = showDifference;
+
+/***/ }),
+
+/***/ "./parts/download.js":
+/*!***************************!*\
+  !*** ./parts/download.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function downloadBtn() {
+  var downloadBtn = document.querySelectorAll('.download');
+  downloadBtn.forEach(function (item) {
+    var link = document.createElement('a');
+    link.setAttribute('href', 'assets/WP-2014-2-Five-Steps-to-Planning-Success.pdf');
+    link.setAttribute('download', 'fileName');
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      link.click();
+    });
+  });
+}
+
+module.exports = downloadBtn;
+
+/***/ }),
+
+/***/ "./parts/form.js":
+/*!***********************!*\
+  !*** ./parts/form.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function form() {
+  var form = document.querySelectorAll('form.form');
+  form.forEach(function (item) {
+    var message = {
+      loading: 'Loading...',
+      succsess: 'Thank you! We will contact you soon!',
+      failure: 'Something goes wrong...'
+    };
+    var input = item.querySelectorAll('input'),
+        statusMessage = document.createElement('div');
+    statusMessage.classList.add('status');
+    input.forEach(function (item) {
+      var name = item.getAttribute('name');
+
+      if (name == 'phone') {
+        mask(item);
+      }
+
+      if (name == 'email') {
+        validate(item, /^[a-zA-Z0-9 ,.\-:"()]*?$/);
+      }
+
+      if (name == 'datetime') {
+        validate(item, /^[0-9 .\/]*?$/);
+      }
+    });
+    item.addEventListener('submit', function (e) {
+      e.preventDefault();
+      this.appendChild(statusMessage);
+      statusMessage.classList.remove('hidden');
+      var formData = new FormData(this),
+          obj = {};
+      formData.forEach(function (value, key) {
+        obj[key] = value;
+      });
+      var json = JSON.stringify(obj);
+
+      function postData(data) {
+        return new Promise(function (resolve, reject) {
+          var request = new XMLHttpRequest();
+          request.open('POST', 'server.php');
+          request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+          request.onreadystatechange = function () {
+            if (request.readyState < 4) {
+              resolve();
+            } else if (request.readyState === 4 && request.status == 200) {
+              resolve();
+            } else {
+              reject();
+            }
+          };
+
+          request.send(data);
+        }); // Promise end
+      } // postData end
+
+
+      var clearInput = function clearInput() {
+        for (var i = 0; i < input.length; i++) {
+          input[i].value = '';
+        }
+      }; // clearInput end
+
+
+      var clearMessage = function clearMessage() {
+        setTimeout(function () {
+          return statusMessage.classList.add('hidden');
+        }, 3000);
+        setTimeout(function () {
+          return statusMessage.parentNode.removeChild(statusMessage);
+        }, 4000);
+      }; //clearMessage end
+
+
+      postData(json).then(function () {
+        statusMessage.style.backgroundColor = '#BEAB2A';
+        statusMessage.innerHTML = message.loading;
+      }).then(function () {
+        statusMessage.style.backgroundColor = '#166D29';
+        statusMessage.innerHTML = message.succsess;
+      }).catch(function () {
+        statusMessage.style.backgroundColor = 'red';
+        statusMessage.innerHTML = message.failure;
+      }).then(clearInput).then(clearMessage);
+    }); // submin end
+  }); // validate
+
+  function validate(input, regex) {
+    var value = input.value;
+    input.addEventListener('input', function (e) {
+      var newValue = e.target.value;
+
+      if (!newValue.match(regex)) {
+        input.value = value;
+        return;
+      }
+
+      value = newValue;
+    });
+  } // end validate
+  // mask
+
+
+  function mask(input) {
+    function setCursorPosition(pos, elem) {
+      elem.focus();
+      if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);else if (elem.createTextRange) {
+        var range = elem.createTextRange();
+        range.collapse(true);
+        range.moveEnd("character", pos);
+        range.moveStart("character", pos);
+        range.select();
+      }
+    } // end setCursorPosition
+
+
+    function change(event) {
+      var matrix = "+1 (___) ___-____",
+          i = 0,
+          def = matrix.replace(/\D/g, ""),
+          val = this.value.replace(/\D/g, "");
+      if (def.length >= val.length) val = def;
+      this.value = matrix.replace(/./g, function (a) {
+        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+      });
+
+      if (event.type == "blur") {
+        if (this.value.length == 2) this.value = "";
+      } else setCursorPosition(this.value.length, this);
+    } // end Change
+
+
+    input.addEventListener("input", change, false);
+    input.addEventListener("focus", change, false);
+    input.addEventListener("blur", change, false);
+  } // end mask
+
+}
+
+module.exports = form;
 
 /***/ }),
 
@@ -220,6 +403,45 @@ module.exports = fullPageSlider;
 
 /***/ }),
 
+/***/ "./parts/modules-video.js":
+/*!********************************!*\
+  !*** ./parts/modules-video.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function modulesVideo() {
+  var videoArr = document.querySelectorAll('.module__video');
+  videoArr.forEach(function (item) {
+    var video = item.querySelectorAll('.module__video-item'),
+        active = video[0],
+        activeBtn = active.querySelector('.play').innerHTML;
+    var a = 0;
+
+    var _loop = function _loop(i) {
+      if (a == i) {
+        video[i].querySelector('.play').addEventListener('click', function () {
+          if (video[i + 1] !== undefined) {
+            video[i + 1].classList.add('active');
+            setTimeout(function () {
+              return video[i + 1].querySelector('.play').innerHTML = activeBtn;
+            }, 1000);
+          }
+        });
+        a++;
+      }
+    };
+
+    for (var i = 0; i < video.length; i++) {
+      _loop(i);
+    }
+  });
+}
+
+module.exports = modulesVideo;
+
+/***/ }),
+
 /***/ "./parts/slider.js":
 /*!*************************!*\
   !*** ./parts/slider.js ***!
@@ -247,16 +469,16 @@ function autoplaySlider() {
       item.style.position = 'absolute';
     });
 
-    function toggleClass(object, animation) {
+    var toggleClass = function toggleClass(object, animation) {
       var display = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       object.classList.add(animation);
       setTimeout(function () {
         if (display !== null) object.style.display = display;
         object.classList.remove(animation);
       }, 400);
-    }
+    };
 
-    function showSlides(n) {
+    var showSlides = function showSlides(n) {
       // clear card-active
       slides.forEach(function (item) {
         return item.classList.remove('active');
@@ -285,21 +507,13 @@ function autoplaySlider() {
         slides[n[_i]].style.left = left + 'px';
         left += Math.floor(width + marginRight);
       }
-    } // end showSlides
+    }; // end showSlides
     // showAll
 
 
-    showSlides(slideIndex); // infinite
+    showSlides(slideIndex); // next-prev
 
-    if (sliderContainer.hasAttribute('data-loop')) {
-      var timerId = setTimeout(function run() {
-        nextSlide(1);
-        setTimeout(run, 4000);
-      }, 4000);
-    } // next-prev
-
-
-    function nextSlide(n) {
+    var nextSlide = function nextSlide(n) {
       slideIndex = slideIndex.map(function (item) {
         return item + n;
       }); // loop
@@ -323,11 +537,11 @@ function autoplaySlider() {
       if (n < 0) {
         toggleClass(slides[slideIndex[0]], 'fadeInLeft', 'block');
       } else {
-        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn');
+        toggleClass(slides[slideIndex[slideIndex.length - 1]], 'fadeIn', 'block');
       }
 
       showSlides(slideIndex);
-    } // end nextSlide
+    }; // end nextSlide
 
 
     next.addEventListener('click', function (e) {
@@ -337,11 +551,47 @@ function autoplaySlider() {
     prev.addEventListener('click', function (e) {
       e.preventDefault();
       nextSlide(-1);
-    });
+    }); // infinite
+
+    if (sliderContainer.hasAttribute('data-loop')) {
+      var timerId = setTimeout(function run() {
+        nextSlide(1);
+        setTimeout(run, 4000);
+      }, 4000);
+    }
   });
 }
 
 module.exports = autoplaySlider;
+
+/***/ }),
+
+/***/ "./parts/tab.js":
+/*!**********************!*\
+  !*** ./parts/tab.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function tab() {
+  var tab = document.querySelectorAll('.module__info-show');
+  tab.forEach(function (item) {
+    var next = item.nextElementSibling,
+        plus = item.querySelector('.plus');
+    next.style.height = '0';
+    plus.addEventListener('click', function (e) {
+      if (next.classList.contains('open')) {
+        next.style.height = '0';
+        next.classList.remove('open');
+      } else {
+        next.style.height = next.scrollHeight + 'px';
+        next.classList.add('open');
+      }
+    });
+  });
+}
+
+module.exports = tab;
 
 /***/ }),
 
@@ -362,9 +612,12 @@ function videoButton() {
     var videoUrl = item.dataset.url;
     item.addEventListener('click', function (e) {
       e.preventDefault();
-      video.src = videoUrl;
-      overlay.style.display = 'flex';
-      videoWrap.style.display = 'block';
+
+      if (!item.querySelector('.closed') || !item.querySelector('.attention')) {
+        video.src = videoUrl;
+        overlay.style.display = 'flex';
+        videoWrap.style.display = 'block';
+      }
     });
   });
   close.addEventListener('click', function (e) {

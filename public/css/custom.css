@@ -1,4 +1,4 @@
-.fade, .module__info>div:not(:last-child), .module__video>div, .overlay {
+.fade, .module__info>div:not(:last-child), .module__video>div, .module__video>button, .overlay {
   animation: fadeIn 0.5s both 0.5s;
 }
 
@@ -55,55 +55,39 @@
   animation-duration: 0.6s;
 }
 
-
-
-@-webkit-keyframes fadeInLeftMod {
-  from {
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: 0;
-    width: 0;
-    opacity: 0;
-    -webkit-transform: translate3d(-331px, 0, 0);
-    transform: translate3d(-331px, 0, 0);
-  }
-
-  to {
-    padding-right: 32px;
-    padding-left: 32px;
-    margin-right: 25px;
-    width: 307px;
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+.status {
+  width: 300px;
+  background-color: #9ec73d;
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 4px;
+  color: #fff;
+  opacity: 1;
+  transition: all 0.5s;
+  animation: fadeInDown 0.6s;
 }
 
-@keyframes fadeInLeftMod {
-  from {
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: 0;
-    width: 0;
-    opacity: 0;
-    -webkit-transform: translate3d(-331px, 0, 0);
-    transform: translate3d(-331px, 0, 0);
-  }
-
-  to {
-    padding-right: 32px;
-    padding-left: 32px;
-    margin-right: 25px;
-    width: 307px;
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+.status.hidden {
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+.module__video-item {
+  transition: all 0.5s;
+}
+.module__video-item.active {
+  opacity: 1;
+  -webkit-filter: none;
+  filter: none;
+  opacity: .6;
+}
+.module__info-descr {
+  transition: all 0.5s;
+  overflow: hidden;
 }
 
-.fadeInLeftmod {
-  -webkit-animation-name: fadeInLeftMod;
-  animation-name: fadeInLeftMod;
+.download {
+  cursor: pointer;
 }
 
 @-webkit-keyframes fadeInDownMod {
