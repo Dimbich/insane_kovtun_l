@@ -1,4 +1,4 @@
-.fade, .module__info>div:not(:last-child), .module__video>div, .overlay {
+.fade, .module__info>div:not(:last-child), .module__video>div, .module__video>button, .overlay {
   animation: fadeIn 0.5s both 0.5s;
 }
 
@@ -81,7 +81,10 @@
   filter: none;
   opacity: .6;
 }
-
+.module__info-descr {
+  transition: all 0.5s;
+  overflow: hidden;
+}
 
 @-webkit-keyframes fadeInDownMod {
   from {

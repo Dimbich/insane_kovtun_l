@@ -103,7 +103,8 @@ window.addEventListener('DOMContentLoaded', function () {
   showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
       autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
       form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
-      modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js");
+      modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js"),
+      tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js");
 
   fullPageSlider();
   videoButton(); // modulesSlider();
@@ -113,6 +114,7 @@ window.addEventListener('DOMContentLoaded', function () {
   autoplaySlider();
   form();
   modulesVideo();
+  tab();
 });
 
 /***/ }),
@@ -535,6 +537,36 @@ function autoplaySlider() {
 }
 
 module.exports = autoplaySlider;
+
+/***/ }),
+
+/***/ "./parts/tab.js":
+/*!**********************!*\
+  !*** ./parts/tab.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function tab() {
+  var tab = document.querySelectorAll('.module__info-show');
+  tab.forEach(function (item) {
+    var next = item.nextElementSibling,
+        plus = item.querySelector('.plus');
+    next.style.height = '0';
+    plus.addEventListener('click', function (e) {
+      if (next.classList.contains('open')) {
+        next.style.height = '0';
+        next.classList.remove('open');
+      } else {
+        console.log('open');
+        next.style.height = next.scrollHeight + 'px';
+        next.classList.add('open');
+      }
+    });
+  });
+}
+
+module.exports = tab;
 
 /***/ }),
 
