@@ -212,15 +212,16 @@ function form() {
       var name = item.getAttribute('name');
 
       if (name == 'phone') {
-        mask(item);
+        mask(item, '+1 (___) ___-____');
       }
 
       if (name == 'email') {
-        validate(item, /^[a-zA-Z0-9 ,.\-:"()]*?$/);
+        validate(item, /^[a-zA-Z0-9 .\-@()]*?$/);
       }
 
       if (name == 'datetime') {
-        validate(item, /^[0-9 .\/]*?$/);
+        // validate(item, /^[0-9 .\/]*?$/);
+        mask(item, '__.__.____');
       }
     });
     item.addEventListener('submit', function (e) {
@@ -301,7 +302,7 @@ function form() {
   // mask
 
 
-  function mask(input) {
+  function mask(input, regex) {
     function setCursorPosition(pos, elem) {
       elem.focus();
       if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);else if (elem.createTextRange) {
@@ -315,7 +316,7 @@ function form() {
 
 
     function change(event) {
-      var matrix = "+1 (___) ___-____",
+      var matrix = regex,
           i = 0,
           def = matrix.replace(/\D/g, ""),
           val = this.value.replace(/\D/g, "");
@@ -640,7 +641,7 @@ function videoButton() {
       overlay.style.display = 'none';
       videoWrap.classList.remove('hide');
       overlay.classList.remove('hide');
-      video.src = 'none';
+      video.src = '';
     });
   });
 }

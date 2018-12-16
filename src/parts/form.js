@@ -15,15 +15,16 @@ function form() {
     input.forEach(function(item) {
       let name = item.getAttribute('name');
       if (name == 'phone') {
-        mask(item);
+        mask(item, '+1 (___) ___-____');
       }
 
       if (name == 'email') {
-        validate(item, /^[a-zA-Z0-9 ,.\-:"()]*?$/);
+        validate(item, /^[a-zA-Z0-9 .\-@()]*?$/);
       }
 
       if (name == 'datetime') {
-        validate(item, /^[0-9 .\/]*?$/);
+        // validate(item, /^[0-9 .\/]*?$/);
+        mask(item, '__.__.____');
       }
     });
 
@@ -106,7 +107,7 @@ function form() {
   } // end validate
 
   // mask
-  function mask(input) {
+  function mask(input, regex) {
     function setCursorPosition(pos, elem) {
       elem.focus();
       if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
@@ -120,7 +121,7 @@ function form() {
     } // end setCursorPosition
 
     function change(event) {
-      let matrix = "+1 (___) ___-____",
+      let matrix = regex,
           i = 0,
           def = matrix.replace(/\D/g, ""),
           val = this.value.replace(/\D/g, "");
