@@ -41,7 +41,7 @@ function videoButton() {
         overlay.style.display = 'none';
         videoWrap.classList.remove('hide');
         overlay.classList.remove('hide');
-        video.src = 'none';
+        video.src = '';
       });
   });
 }
