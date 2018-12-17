@@ -3,8 +3,6 @@ window.addEventListener('DOMContentLoaded', function(){
 
   let fullPageSlider = require('./parts/fullpage-slider'),
       videoButton = require('./parts/video-btn'),
-      // modulesSlider = require('./parts/modules-slider'),
-      // moveToModule = require('./parts/move-to-module'),
       showDifference = require('./parts/difference'),
       autoplaySlider = require('./parts/slider'),
       form = require('./parts/form'),
@@ -14,8 +12,6 @@ window.addEventListener('DOMContentLoaded', function(){
 
   fullPageSlider();
   videoButton();
-  // modulesSlider();
-  // moveToModule();
   showDifference();
   autoplaySlider();
   form();
