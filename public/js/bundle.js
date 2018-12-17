@@ -98,9 +98,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   var fullPageSlider = __webpack_require__(/*! ./parts/fullpage-slider */ "./parts/fullpage-slider.js"),
       videoButton = __webpack_require__(/*! ./parts/video-btn */ "./parts/video-btn.js"),
-      // modulesSlider = require('./parts/modules-slider'),
-  // moveToModule = require('./parts/move-to-module'),
-  showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
+      showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
       autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
       form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
       modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js"),
@@ -108,9 +106,7 @@ window.addEventListener('DOMContentLoaded', function () {
       downloadBtn = __webpack_require__(/*! ./parts/download */ "./parts/download.js");
 
   fullPageSlider();
-  videoButton(); // modulesSlider();
-  // moveToModule();
-
+  videoButton();
   showDifference();
   autoplaySlider();
   form();
@@ -174,6 +170,12 @@ module.exports = showDifference;
 /***/ (function(module, exports) {
 
 function downloadBtn() {
+  HTMLElement.prototype.click = function () {
+    var evt = this.ownerDocument.createEvent('MouseEvents');
+    evt.initMouseEvent('click', true, true, this.ownerDocument.defaultView, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+    this.dispatchEvent(evt);
+  };
+
   var downloadBtn = document.querySelectorAll('.download');
   downloadBtn.forEach(function (item) {
     var link = document.createElement('a');
