@@ -1,6 +1,7 @@
 function modulesVideo() {
 
-  let videoArr = document.querySelectorAll('.module__video');
+  let videoArr = document.querySelectorAll('.module__video'),
+      iframe = document.querySelector('#frame');
 
   videoArr.forEach(function(item) {
     let video = item.querySelectorAll('.module__video-item'),
@@ -11,6 +12,7 @@ function modulesVideo() {
     for (let i = 0; i < video.length; i++) {
       if (a == i) {
         video[i].querySelector('.play').addEventListener('click', () => {
+
           if (video[i + 1] !== undefined) {
             video[i + 1].classList.add('active');
             setTimeout(() => video[i + 1].querySelector('.play').innerHTML = activeBtn, 1000);

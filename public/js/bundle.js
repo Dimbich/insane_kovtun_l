@@ -101,16 +101,16 @@ window.addEventListener('DOMContentLoaded', function () {
       showDifference = __webpack_require__(/*! ./parts/difference */ "./parts/difference.js"),
       autoplaySlider = __webpack_require__(/*! ./parts/slider */ "./parts/slider.js"),
       form = __webpack_require__(/*! ./parts/form */ "./parts/form.js"),
-      modulesVideo = __webpack_require__(/*! ./parts/modules-video */ "./parts/modules-video.js"),
-      tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js"),
+      // modulesVideo = require('./parts/modules-video'),
+  tab = __webpack_require__(/*! ./parts/tab */ "./parts/tab.js"),
       downloadBtn = __webpack_require__(/*! ./parts/download */ "./parts/download.js");
 
   fullPageSlider();
   videoButton();
   showDifference();
   autoplaySlider();
-  form();
-  modulesVideo();
+  form(); // modulesVideo();
+
   tab();
   downloadBtn();
 });
@@ -406,45 +406,6 @@ module.exports = fullPageSlider;
 
 /***/ }),
 
-/***/ "./parts/modules-video.js":
-/*!********************************!*\
-  !*** ./parts/modules-video.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function modulesVideo() {
-  var videoArr = document.querySelectorAll('.module__video');
-  videoArr.forEach(function (item) {
-    var video = item.querySelectorAll('.module__video-item'),
-        active = video[0],
-        activeBtn = active.querySelector('.play').innerHTML;
-    var a = 0;
-
-    var _loop = function _loop(i) {
-      if (a == i) {
-        video[i].querySelector('.play').addEventListener('click', function () {
-          if (video[i + 1] !== undefined) {
-            video[i + 1].classList.add('active');
-            setTimeout(function () {
-              return video[i + 1].querySelector('.play').innerHTML = activeBtn;
-            }, 1000);
-          }
-        });
-        a++;
-      }
-    };
-
-    for (var i = 0; i < video.length; i++) {
-      _loop(i);
-    }
-  });
-}
-
-module.exports = modulesVideo;
-
-/***/ }),
-
 /***/ "./parts/slider.js":
 /*!*************************!*\
   !*** ./parts/slider.js ***!
@@ -606,25 +567,53 @@ module.exports = tab;
 /***/ (function(module, exports) {
 
 function videoButton() {
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  var videoId = 'ZpCluchEflg';
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('player', {
+      width: '100%',
+      height: '100%',
+      videoId: videoId,
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  };
+
+  function onPlayerReady(event) {}
+
+  function onPlayerStateChange(event) {}
+
   var play = document.querySelectorAll('.play'),
       overlay = document.querySelector('.overlay'),
       videoWrap = overlay.querySelector('.video'),
-      video = overlay.querySelector('iframe'),
-      close = overlay.querySelector('.close');
+      close = overlay.querySelector('.close'),
+      videoArr = document.querySelectorAll('.module__video'),
+      activeVideo;
   play.forEach(function (item) {
     var videoUrl = item.dataset.url;
     item.addEventListener('click', function (e) {
       e.preventDefault();
 
       if (!item.querySelector('.closed') || !item.querySelector('.attention')) {
-        video.src = videoUrl;
         overlay.style.display = 'flex';
         videoWrap.style.display = 'block';
+        player.cueVideoByUrl({
+          mediaContentUrl: videoUrl
+        });
+        player.playVideo();
+        activeVideo = item;
       }
     });
   });
   close.addEventListener('click', function (e) {
     e.preventDefault();
+    player.stopVideo();
 
     var delay = function delay(ms) {
       return new Promise(function (resolve, reject) {
@@ -643,9 +632,37 @@ function videoButton() {
       overlay.style.display = 'none';
       videoWrap.classList.remove('hide');
       overlay.classList.remove('hide');
-      video.src = '';
     });
   });
+
+  if (document.querySelector('.moduleapp')) {
+    videoArr.forEach(function (item) {
+      var video = item.querySelectorAll('.module__video-item'),
+          active = video[0],
+          activeBtn = active.querySelector('.play').innerHTML;
+      var a = 0;
+
+      var _loop = function _loop(i) {
+        if (a == i) {
+          close.addEventListener('click', function () {
+            if (video[i].querySelector('.play') == activeVideo && player.getPlayerState() === 0) {
+              if (video[i + 1] !== undefined) {
+                video[i + 1].classList.add('active');
+                video[i + 1].querySelector('.play').innerHTML = activeBtn;
+              }
+            }
+          }); // close
+
+          a++;
+        }
+      };
+
+      for (var i = 0; i < video.length; i++) {
+        _loop(i);
+      } //end for
+
+    }); // end ForEach
+  }
 }
 
 module.exports = videoButton;
