@@ -218,77 +218,92 @@ function form() {
       }
 
       if (name == 'email') {
-        validate(item, /^[a-zA-Z0-9 .\-@()]*?$/);
+        checkRegex(item, /^[a-zA-Z0-9 .\-@()]*?$/);
       }
 
       if (name == 'datetime') {
-        // validate(item, /^[0-9 .\/]*?$/);
+        // checkRegex(item, /^[0-9 .\/]*?$/);
         mask(item, '__.__.____');
       }
     });
     item.addEventListener('submit', function (e) {
       e.preventDefault();
-      this.appendChild(statusMessage);
       statusMessage.classList.remove('hidden');
-      var formData = new FormData(this),
-          obj = {};
-      formData.forEach(function (value, key) {
-        obj[key] = value;
-      });
-      var json = JSON.stringify(obj);
+      this.appendChild(statusMessage);
 
-      function postData(data) {
-        return new Promise(function (resolve, reject) {
-          var request = new XMLHttpRequest();
-          request.open('POST', 'server.php');
-          request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      var _valInput = this.querySelectorAll('input[data-valid]'),
+          valid = true;
 
-          request.onreadystatechange = function () {
-            if (request.readyState < 4) {
-              resolve();
-            } else if (request.readyState === 4 && request.status == 200) {
-              resolve();
-            } else {
-              reject();
-            }
-          };
-
-          request.send(data);
-        }); // Promise end
-      } // postData end
-
-
-      var clearInput = function clearInput() {
-        for (var i = 0; i < input.length; i++) {
-          input[i].value = '';
+      _valInput.forEach(function (item) {
+        if (item.value.trim().length == 0) {
+          statusMessage.style.backgroundColor = 'red';
+          statusMessage.innerHTML = 'Please fill all fields';
+          valid = false;
         }
-      }; // clearInput end
+      });
+
+      if (valid == true) {
+        var postData = function postData(data) {
+          return new Promise(function (resolve, reject) {
+            var request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+            request.onreadystatechange = function () {
+              if (request.readyState < 4) {
+                resolve();
+              } else if (request.readyState === 4 && request.status == 200) {
+                resolve();
+              } else {
+                reject();
+              }
+            };
+
+            request.send(data);
+          }); // Promise end
+        }; // postData end
 
 
-      var clearMessage = function clearMessage() {
-        setTimeout(function () {
-          return statusMessage.classList.add('hidden');
-        }, 3000);
-        setTimeout(function () {
-          return statusMessage.parentNode.removeChild(statusMessage);
-        }, 4000);
-      }; //clearMessage end
+        var formData = new FormData(this),
+            obj = {};
+        formData.forEach(function (value, key) {
+          obj[key] = value;
+        });
+        var json = JSON.stringify(obj);
+
+        var clearInput = function clearInput() {
+          for (var i = 0; i < input.length; i++) {
+            input[i].value = '';
+          }
+        }; // clearInput end
 
 
-      postData(json).then(function () {
-        statusMessage.style.backgroundColor = '#BEAB2A';
-        statusMessage.innerHTML = message.loading;
-      }).then(function () {
-        statusMessage.style.backgroundColor = '#166D29';
-        statusMessage.innerHTML = message.succsess;
-      }).catch(function () {
-        statusMessage.style.backgroundColor = 'red';
-        statusMessage.innerHTML = message.failure;
-      }).then(clearInput).then(clearMessage);
+        var clearMessage = function clearMessage() {
+          setTimeout(function () {
+            return statusMessage.classList.add('hidden');
+          }, 3000);
+          setTimeout(function () {
+            return statusMessage.parentNode.removeChild(statusMessage);
+          }, 4000);
+        }; //clearMessage end
+
+
+        postData(json).then(function () {
+          statusMessage.style.backgroundColor = '#BEAB2A';
+          statusMessage.innerHTML = message.loading;
+        }).then(function () {
+          statusMessage.style.backgroundColor = '#166D29';
+          statusMessage.innerHTML = message.succsess;
+        }).catch(function () {
+          statusMessage.style.backgroundColor = 'red';
+          statusMessage.innerHTML = message.failure;
+        }).then(clearInput).then(clearMessage);
+      } // statusMessage.classList.remove('hidden');
+
     }); // submin end
-  }); // validate
+  }); // checkRegex
 
-  function validate(input, regex) {
+  function checkRegex(input, regex) {
     var value = input.value;
     input.addEventListener('input', function (e) {
       var newValue = e.target.value;
@@ -300,7 +315,7 @@ function form() {
 
       value = newValue;
     });
-  } // end validate
+  } // end checkRegex
   // mask
 
 

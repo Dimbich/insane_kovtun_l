@@ -5,7 +5,7 @@ function form() {
     let message = {
       loading: 'Loading...',
       succsess: 'Thank you! We will contact you soon!',
-      failure: 'Something goes wrong...'
+      failure: 'Something goes wrong...',
     };
 
     let input = item.querySelectorAll('input'),
@@ -19,82 +19,98 @@ function form() {
       }
 
       if (name == 'email') {
-        validate(item, /^[a-zA-Z0-9 .\-@()]*?$/);
+        checkRegex(item, /^[a-zA-Z0-9 .\-@()]*?$/);
       }
 
       if (name == 'datetime') {
-        // validate(item, /^[0-9 .\/]*?$/);
+        // checkRegex(item, /^[0-9 .\/]*?$/);
         mask(item, '__.__.____');
       }
+
+      
     });
 
 
     item.addEventListener('submit', function(e) {
       e.preventDefault();
-      this.appendChild(statusMessage);
       statusMessage.classList.remove('hidden');
+      this.appendChild(statusMessage);
+      let _valInput = this.querySelectorAll('input[data-valid]'), valid = true;
 
-      let formData = new FormData(this),
-          obj = {};
-
-      formData.forEach(function(value, key){
-        obj[key] = value;
+      _valInput.forEach(function(item) {
+        if (item.value.trim().length == 0) {
+          statusMessage.style.backgroundColor = 'red';
+          statusMessage.innerHTML = 'Please fill all fields';
+          valid = false;
+        }
       });
 
-      let json = JSON.stringify(obj);
+      if (valid == true) {
+        let formData = new FormData(this),
+            obj = {};
 
-      function postData(data) {
-        return new Promise(function(resolve, reject) {
-          let request = new XMLHttpRequest();
+        formData.forEach(function(value, key){
+          obj[key] = value;
+        });
 
-          request.open('POST', 'server.php');
-          request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        let json = JSON.stringify(obj);
 
-          request.onreadystatechange = function() {
-            if (request.readyState < 4) {
-              resolve();
-            } else if (request.readyState === 4 && request.status == 200) {
-              resolve();
-            } else {
-              reject();
-            }
-          };
+        function postData(data) {
+          return new Promise(function(resolve, reject) {
+            let request = new XMLHttpRequest();
 
-          request.send(data);
-        }); // Promise end
-      } // postData end
+            request.open('POST', 'server.php');
+            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-      let clearInput = () => {
-        for (let i = 0; i < input.length; i++) {
-          input[i].value = '';
-        }
-      }; // clearInput end
+            request.onreadystatechange = function() {
+              if (request.readyState < 4) {
+                resolve();
+              } else if (request.readyState === 4 && request.status == 200) {
+                resolve();
+              } else {
+                reject();
+              }
+            };
 
-      let clearMessage = () => {
-        setTimeout(() => statusMessage.classList.add('hidden'), 3000);
-        setTimeout(() => statusMessage.parentNode.removeChild(statusMessage), 4000);
-      }; //clearMessage end
+            request.send(data);
+          }); // Promise end
+        } // postData end
 
-      postData(json)
-        .then(() => {
-          statusMessage.style.backgroundColor = '#BEAB2A';
-          statusMessage.innerHTML = message.loading;
-        })
-        .then(() => {
-          statusMessage.style.backgroundColor = '#166D29';
-          statusMessage.innerHTML = message.succsess;
-        })
-        .catch(() => {
-          statusMessage.style.backgroundColor = 'red';
-          statusMessage.innerHTML = message.failure;
-        })
-        .then(clearInput)
-        .then(clearMessage);
+        let clearInput = () => {
+          for (let i = 0; i < input.length; i++) {
+            input[i].value = '';
+          }
+        }; // clearInput end
+
+        let clearMessage = () => {
+          setTimeout(() => statusMessage.classList.add('hidden'), 3000);
+          setTimeout(() => statusMessage.parentNode.removeChild(statusMessage), 4000);
+        }; //clearMessage end
+
+        postData(json)
+          .then(() => {
+            statusMessage.style.backgroundColor = '#BEAB2A';
+            statusMessage.innerHTML = message.loading;
+          })
+          .then(() => {
+            statusMessage.style.backgroundColor = '#166D29';
+            statusMessage.innerHTML = message.succsess;
+          })
+          .catch(() => {
+            statusMessage.style.backgroundColor = 'red';
+            statusMessage.innerHTML = message.failure;
+          })
+          .then(clearInput)
+          .then(clearMessage);
+      }
+      // statusMessage.classList.remove('hidden');
+
     }); // submin end
   });
 
-  // validate
-  function validate(input, regex) {
+
+  // checkRegex
+  function checkRegex(input, regex) {
     let value = input.value;
     input.addEventListener('input', function(e){
       let newValue = e.target.value;
@@ -104,7 +120,7 @@ function form() {
       }
       value = newValue;
     });
-  } // end validate
+  } // end checkRegex
 
   // mask
   function mask(input, regex) {
